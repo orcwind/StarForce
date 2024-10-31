@@ -22,11 +22,16 @@ namespace StarForce.Editor.DataTableTools
         private const string CSharpCodeTemplateFileName = "Assets/GameMain/Configs/DataTableCodeTemplate.txt";
         private static readonly Regex EndWithNumberRegex = new Regex(@"\d+$");
         private static readonly Regex NameRegex = new Regex(@"^[A-Z][A-Za-z0-9_]*$");
+public static DataTableProcessor CreateDataTableProcessor(string dataTableName)
+{
+    string dataTableFileName = Utility.Path.GetRegularPath(Path.Combine(DataTablePath, dataTableName + ".csv"));
+    if (!File.Exists(dataTableFileName))
+    {
+        throw new GameFrameworkException(Utility.Text.Format("Data table file '{0}' is not exist.", dataTableFileName));
+    }
 
-        public static DataTableProcessor CreateDataTableProcessor(string dataTableName)
-        {
-            return new DataTableProcessor(Utility.Path.GetRegularPath(Path.Combine(DataTablePath, dataTableName + ".txt")), Encoding.GetEncoding("GB2312"), 1, 2, null, 3, 4, 1);
-        }
+    return new DataTableProcessor(dataTableFileName, Encoding.GetEncoding("GB2312"), 1, 2, null, 3, 4, 1);
+}
 
         public static bool CheckRawData(DataTableProcessor dataTableProcessor, string dataTableName)
         {
@@ -194,7 +199,7 @@ namespace StarForce.Editor.DataTableTools
 
                 if (dataTableProcessor.IsIdColumn(i))
                 {
-                    // 编号列
+                    // 编号
                     stringBuilder.AppendLine("                    m_Id = binaryReader.Read7BitEncodedInt32();");
                     continue;
                 }

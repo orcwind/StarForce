@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-06-16 21:54:35.680
+// 生成时间：2024-10-17 08:54:36.550
 //------------------------------------------------------------
 
 using GameFramework;
@@ -19,7 +19,7 @@ using UnityGameFramework.Runtime;
 namespace StarForce
 {
     /// <summary>
-    /// 武器表。
+    /// 武器配置表。
     /// </summary>
     public class DRWeapon : DataRowBase
     {
@@ -37,45 +37,27 @@ namespace StarForce
         }
 
         /// <summary>
-        /// 获取攻击力。
+        /// 获取武器名称。
         /// </summary>
-        public int Attack
+        public string WeaponName
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// 获取攻击间隔。
+        /// 获取武器描述。
         /// </summary>
-        public float AttackInterval
+        public string WeaponDescription
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// 获取子弹编号。
+        /// 获取武器类型(0:近战。
         /// </summary>
-        public int BulletId
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取子弹速度。
-        /// </summary>
-        public float BulletSpeed
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取子弹声音编号。
-        /// </summary>
-        public int BulletSoundId
+        public int WeaponType
         {
             get;
             private set;
@@ -93,11 +75,9 @@ namespace StarForce
             index++;
             m_Id = int.Parse(columnStrings[index++]);
             index++;
-            Attack = int.Parse(columnStrings[index++]);
-            AttackInterval = float.Parse(columnStrings[index++]);
-            BulletId = int.Parse(columnStrings[index++]);
-            BulletSpeed = float.Parse(columnStrings[index++]);
-            BulletSoundId = int.Parse(columnStrings[index++]);
+            WeaponName = columnStrings[index++];
+            WeaponDescription = columnStrings[index++];
+            WeaponType = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -110,11 +90,9 @@ namespace StarForce
                 using (BinaryReader binaryReader = new BinaryReader(memoryStream, Encoding.UTF8))
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
-                    Attack = binaryReader.Read7BitEncodedInt32();
-                    AttackInterval = binaryReader.ReadSingle();
-                    BulletId = binaryReader.Read7BitEncodedInt32();
-                    BulletSpeed = binaryReader.ReadSingle();
-                    BulletSoundId = binaryReader.Read7BitEncodedInt32();
+                    WeaponName = binaryReader.ReadString();
+                    WeaponDescription = binaryReader.ReadString();
+                    WeaponType = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

@@ -5,6 +5,8 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace StarForce
@@ -12,7 +14,7 @@ namespace StarForce
     /// <summary>
     /// 游戏入口。
     /// </summary>
-    public partial class GameEntry : MonoBehaviour
+    public partial class GameEntry:MonoBehaviour
     {
         public static BuiltinDataComponent BuiltinData
         {

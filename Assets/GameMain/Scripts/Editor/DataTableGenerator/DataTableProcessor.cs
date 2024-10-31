@@ -42,9 +42,9 @@ namespace StarForce.Editor.DataTableTools
                 throw new GameFrameworkException("Data table file name is invalid.");
             }
 
-            if (!dataTableFileName.EndsWith(".txt", StringComparison.Ordinal))
+            if (!dataTableFileName.EndsWith(".csv", StringComparison.Ordinal))
             {
-                throw new GameFrameworkException(Utility.Text.Format("Data table file '{0}' is not a txt.", dataTableFileName));
+                throw new GameFrameworkException(Utility.Text.Format("Data table file '{0}' is not a CSV file.", dataTableFileName));
             }
 
             if (!File.Exists(dataTableFileName))
@@ -59,7 +59,7 @@ namespace StarForce.Editor.DataTableTools
             List<string[]> rawValues = new List<string[]>();
             for (int i = 0; i < lines.Length; i++)
             {
-                string[] rawValue = lines[i].Split(DataSplitSeparators);
+                string[] rawValue = lines[i].Split(','); // 使用逗号分隔符
                 for (int j = 0; j < rawValue.Length; j++)
                 {
                     rawValue[j] = rawValue[j].Trim(DataTrimSeparators);

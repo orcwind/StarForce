@@ -18,7 +18,7 @@ namespace StarForce
 
         public static string GetDataTableAsset(string assetName, bool fromBytes)
         {
-            return Utility.Text.Format("Assets/GameMain/DataTables/{0}.{1}", assetName, fromBytes ? "bytes" : "txt");
+            return string.Format("Assets/GameMain/DataTables/{0}.{1}", assetName, fromBytes ? "bytes" : "csv");
         }
 
         public static string GetDictionaryAsset(string assetName, bool fromBytes)

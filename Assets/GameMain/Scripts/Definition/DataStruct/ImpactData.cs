@@ -13,11 +13,11 @@ namespace StarForce
     public struct ImpactData
     {
         private readonly CampType m_Camp;
-        private readonly int m_HP;
-        private readonly int m_Attack;
-        private readonly int m_Defense;
+        private readonly float m_HP;
+        private readonly float m_Attack;
+        private readonly float m_Defense;
 
-        public ImpactData(CampType camp, int hp, int attack, int defense)
+        public ImpactData(CampType camp, float hp, float attack, float defense)
         {
             m_Camp = camp;
             m_HP = hp;
@@ -33,7 +33,7 @@ namespace StarForce
             }
         }
 
-        public int HP
+        public float HP
         {
             get
             {
@@ -41,7 +41,7 @@ namespace StarForce
             }
         }
 
-        public int Attack
+        public float Attack
         {
             get
             {
@@ -49,7 +49,7 @@ namespace StarForce
             }
         }
 
-        public int Defense
+        public float Defense
         {
             get
             {

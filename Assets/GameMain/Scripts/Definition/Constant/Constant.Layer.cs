@@ -24,6 +24,12 @@ namespace StarForce
 
             public const string TargetableObjectLayerName = "Targetable Object";
             public static readonly int TargetableObjectLayerId = LayerMask.NameToLayer(TargetableObjectLayerName);
+
+            public const string InteractionItemLayerName = "Interaction Item";
+            public static readonly int  InteractionItemLayerId = LayerMask.NameToLayer(InteractionItemLayerName);
+
+            public const string ItemDetectorLayerName = "Item Detector";
+            public static readonly int ItemDetectorLayerId = LayerMask.NameToLayer(ItemDetectorLayerName);
         }
     }
 }

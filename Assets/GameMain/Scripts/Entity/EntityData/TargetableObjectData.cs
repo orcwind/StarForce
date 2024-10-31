@@ -17,7 +17,7 @@ namespace StarForce
         private CampType m_Camp = CampType.Unknown;
 
         [SerializeField]
-        private int m_HP = 0;
+        private float m_HP = 0;
 
         public TargetableObjectData(int entityId, int typeId, CampType camp)
             : base(entityId, typeId)
@@ -40,7 +40,7 @@ namespace StarForce
         /// <summary>
         /// 当前生命。
         /// </summary>
-        public int HP
+        public float HP
         {
             get
             {
@@ -55,7 +55,7 @@ namespace StarForce
         /// <summary>
         /// 最大生命。
         /// </summary>
-        public abstract int MaxHP
+        public abstract float MaxHP
         {
             get;
         }

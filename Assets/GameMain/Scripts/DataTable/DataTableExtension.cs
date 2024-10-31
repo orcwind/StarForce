@@ -15,21 +15,33 @@ namespace StarForce
     public static class DataTableExtension
     {
         private const string DataRowClassPrefixName = "StarForce.DR";
-        internal static readonly char[] DataSplitSeparators = new char[] { '\t' };
+        internal static readonly char[] DataSplitSeparators = new char[] { ',' };
         internal static readonly char[] DataTrimSeparators = new char[] { '\"' };
 
         public static void LoadDataTable(this DataTableComponent dataTableComponent, string dataTableName, string dataTableAssetName, object userData)
         {
+            if (dataTableComponent == null)
+            {
+                Debug.LogError("DataTableComponent is null.");
+                return;
+            }
+
             if (string.IsNullOrEmpty(dataTableName))
             {
-                Log.Warning("Data table name is invalid.");
+                Debug.LogWarning("Data table name is invalid.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(dataTableAssetName))
+            {
+                Debug.LogWarning("Data table asset name is invalid.");
                 return;
             }
 
             string[] splitedNames = dataTableName.Split('_');
             if (splitedNames.Length > 2)
             {
-                Log.Warning("Data table name is invalid.");
+                Debug.LogWarning($"Data table name '{dataTableName}' is invalid.");
                 return;
             }
 
@@ -37,12 +49,18 @@ namespace StarForce
             Type dataRowType = Type.GetType(dataRowClassName);
             if (dataRowType == null)
             {
-                Log.Warning("Can not get data row type with class name '{0}'.", dataRowClassName);
+                Debug.LogWarning($"Can not get data row type with class name '{dataRowClassName}'.");
                 return;
             }
 
             string name = splitedNames.Length > 1 ? splitedNames[1] : null;
             DataTableBase dataTable = dataTableComponent.CreateDataTable(dataRowType, name);
+            if (dataTable == null)
+            {
+                Debug.LogError($"Failed to create data table for '{dataTableName}'.");
+                return;
+            }
+
             dataTable.ReadData(dataTableAssetName, Constant.AssetPriority.DataTableAsset, userData);
         }
 

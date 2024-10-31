@@ -1,10 +1,3 @@
-﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2021 Jiang Yin. All rights reserved.
-// Homepage: https://gameframework.cn/
-// Feedback: mailto:ellan@gameframework.cn
-//------------------------------------------------------------
-
 using GameFramework.DataTable;
 using System;
 using UnityEngine;
@@ -14,91 +7,74 @@ namespace StarForce
     [Serializable]
     public class WeaponData : AccessoryObjectData
     {
-        [SerializeField]
-        private int m_Attack = 0;
+        
 
         [SerializeField]
-        private float m_AttackInterval = 0f;
+        private string m_WeaponName = string.Empty;
 
         [SerializeField]
-        private int m_BulletId = 0;
+        private string m_WeaponDescription = string.Empty;
 
         [SerializeField]
-        private float m_BulletSpeed = 0f;
+        private int m_WeaponType = 0;
 
         [SerializeField]
-        private int m_BulletSoundId = 0;
+        private int m_WeaponId = 0;
 
-        public WeaponData(int entityId, int typeId, int ownerId, CampType ownerCamp)
-            : base(entityId, typeId, ownerId, ownerCamp)
+
+//新结构 用weaponid 代替typeid获取数据
+    public WeaponData(int entityId, int typeId, int weaponId, int ownerId, CampType ownerCamp) 
+        : base(entityId, typeId, ownerId, ownerCamp)
+    {
+        IDataTable<DRWeapon> dtWeapon = GameEntry.DataTable.GetDataTable<DRWeapon>();
+        DRWeapon drWeapon = dtWeapon.GetDataRow(weaponId);
+        if (drWeapon != null)
         {
-            IDataTable<DRWeapon> dtWeapon = GameEntry.DataTable.GetDataTable<DRWeapon>();
-            DRWeapon drWeapon = dtWeapon.GetDataRow(TypeId);
-            if (drWeapon == null)
-            {
-                return;
-            }
+            m_WeaponName = drWeapon.WeaponName;
+            m_WeaponDescription = drWeapon.WeaponDescription;
+            m_WeaponType = drWeapon.WeaponType;
+            m_WeaponId = weaponId;
+        }
+        else
+        {
+            Debug.LogError($"Cannot find weapon data for weaponId: {weaponId}");
+        }
+    }
 
-            m_Attack = drWeapon.Attack;
-            m_AttackInterval = drWeapon.AttackInterval;
-            m_BulletId = drWeapon.BulletId;
-            m_BulletSpeed = drWeapon.BulletSpeed;
-            m_BulletSoundId = drWeapon.BulletSoundId;
+
+
+        public string WeaponName
+        {
+            get { return m_WeaponName; }
         }
 
         /// <summary>
-        /// 攻击力。
+        /// 武器描述。
         /// </summary>
-        public int Attack
+        public string WeaponDescription
         {
-            get
-            {
-                return m_Attack;
-            }
+            get { return m_WeaponDescription; }
         }
 
         /// <summary>
-        /// 攻击间隔。
+        /// 武器类型（0:近战, 1:远程）。
         /// </summary>
-        public float AttackInterval
+        public int WeaponType
         {
-            get
-            {
-                return m_AttackInterval;
-            }
+            get { return m_WeaponType; }
+        }
+
+        public int WeaponId
+        {
+            get { return m_WeaponId; }
         }
 
         /// <summary>
-        /// 子弹编号。
+        /// 获取武器类型的字符串表示。
         /// </summary>
-        public int BulletId
+        public string WeaponTypeString
         {
-            get
-            {
-                return m_BulletId;
-            }
-        }
-
-        /// <summary>
-        /// 子弹速度。
-        /// </summary>
-        public float BulletSpeed
-        {
-            get
-            {
-                return m_BulletSpeed;
-            }
-        }
-
-        /// <summary>
-        /// 子弹声音编号。
-        /// </summary>
-        public int BulletSoundId
-        {
-            get
-            {
-                return m_BulletSoundId;
-            }
+            get { return m_WeaponType == 0 ? "近战" : "远程"; }
         }
     }
 }

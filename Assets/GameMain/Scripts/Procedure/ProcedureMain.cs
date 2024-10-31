@@ -6,6 +6,7 @@
 //------------------------------------------------------------
 
 using System.Collections.Generic;
+using UnityEngine;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
@@ -35,9 +36,12 @@ namespace StarForce
 
         protected override void OnInit(ProcedureOwner procedureOwner)
         {
-            base.OnInit(procedureOwner);
+            base.OnInit(procedureOwner);          
 
-            m_Games.Add(GameMode.Survival, new SurvivalGame());
+           m_Games.Add(GameMode.Test, new TestGame());
+          m_Games.Add(GameMode.Normal, new NormalGame());
+         // m_Games.Add(GameMode.Survival, new SurvivalGame());
+    
         }
 
         protected override void OnDestroy(ProcedureOwner procedureOwner)
@@ -49,12 +53,16 @@ namespace StarForce
 
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
-            base.OnEnter(procedureOwner);
-
+            base.OnEnter(procedureOwner);         
             m_GotoMenu = false;
             GameMode gameMode = (GameMode)procedureOwner.GetData<VarByte>("GameMode").Value;
             m_CurrentGame = m_Games[gameMode];
             m_CurrentGame.Initialize();
+            Debug.Log("初始化游戏成功");
+            Debug.Log(gameMode);
+           // GameEntry.Entity.GenerateSerialId()
+           // GameEntry.Entity.ShowBackGround(new BackgroundData(GameEntry.Entity.GenerateSerialId(), 90001));
+          
         }
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
@@ -75,13 +83,14 @@ namespace StarForce
             if (m_CurrentGame != null && !m_CurrentGame.GameOver)
             {
                 m_CurrentGame.Update(elapseSeconds, realElapseSeconds);
-                return;
+                return;             
             }
 
             if (!m_GotoMenu)
             {
                 m_GotoMenu = true;
                 m_GotoMenuDelaySeconds = 0;
+               
             }
 
             m_GotoMenuDelaySeconds += elapseSeconds;
@@ -89,6 +98,7 @@ namespace StarForce
             {
                 procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.Menu"));
                 ChangeState<ProcedureChangeScene>(procedureOwner);
+               
             }
         }
     }

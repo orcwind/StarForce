@@ -35,7 +35,7 @@ namespace StarForce
             float toHPRatio = m_TargetableObjectData.HPRatio;
             if (fromHPRatio > toHPRatio)
             {
-                GameEntry.HPBar.ShowHPBar(this, fromHPRatio, toHPRatio);
+                //GameEntry.HPBar.ShowHPBar(this, fromHPRatio, toHPRatio);
             }
 
             if (m_TargetableObjectData.HP <= 0)
@@ -89,7 +89,7 @@ namespace StarForce
                 return;
             }
 
-            AIUtility.PerformCollision(this, entity);
+           // AIUtility.PerformCollision(this, entity);
         }
     }
 }

@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2021-06-16 21:54:35.576
+// 生成时间：2024-10-17 08:54:36.529
 //------------------------------------------------------------
 
 using GameFramework;
@@ -19,14 +19,14 @@ using UnityGameFramework.Runtime;
 namespace StarForce
 {
     /// <summary>
-    /// 实体表。
+    /// 实体配置表。
     /// </summary>
     public class DREntity : DataRowBase
     {
         private int m_Id = 0;
 
         /// <summary>
-        /// 获取实体编号。
+        /// 获取场景编号。
         /// </summary>
         public override int Id
         {
@@ -45,6 +45,15 @@ namespace StarForce
             private set;
         }
 
+        /// <summary>
+        /// 获取背景音乐编号（没有就设置为0）。
+        /// </summary>
+        public int BackgroundMusicId
+        {
+            get;
+            private set;
+        }
+
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -58,6 +67,7 @@ namespace StarForce
             m_Id = int.Parse(columnStrings[index++]);
             index++;
             AssetName = columnStrings[index++];
+            BackgroundMusicId = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -71,6 +81,7 @@ namespace StarForce
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     AssetName = binaryReader.ReadString();
+                    BackgroundMusicId = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

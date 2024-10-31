@@ -19,17 +19,22 @@ namespace StarForce
     {
         public static readonly string[] DataTableNames = new string[]
         {
-            "Aircraft",
-            "Armor",
-            "Asteroid",
+            //=========================
+            //后续需要添加，读表生成UR文件
+            //=========================
             "Entity",
             "Music",
             "Scene",
-            "Sound",
-            "Thruster",
+            "Sound",            
             "UIForm",
-            "UISound",
-            "Weapon",
+            "UISound",           
+            "Character",
+            "CharacterMotor",
+            "Attack",
+             "Weapon"
+          
+           
+          
         };
 
         private Dictionary<string, bool> m_LoadedFlag = new Dictionary<string, bool>();

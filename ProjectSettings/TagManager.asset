@@ -8,18 +8,18 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Background
+  - Player
+  - Collection
+  - Enemy
   - Targetable Object
-  - 
-  - 
-  - 
-  - 
+  - BodyCollider
+  - AttackArea
+  - Interaction Item
+  - ItemDector
   - 
   - 
   - 
@@ -40,4 +40,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3035558325
+    locked: 0
+  - name: Environment
+    uniqueID: 2728883919
+    locked: 0
+  - name: Player
+    uniqueID: 2383473445
+    locked: 0
+  - name: Frontground
+    uniqueID: 7789509
+    locked: 0
+  - name: Ground
+    uniqueID: 619637167
     locked: 0

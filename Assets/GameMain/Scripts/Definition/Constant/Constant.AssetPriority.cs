@@ -14,6 +14,8 @@ namespace StarForce
         /// </summary>
         public static class AssetPriority
         {
+
+
             public const int ConfigAsset = 100;
             public const int DataTableAsset = 100;
             public const int DictionaryAsset = 100;
@@ -24,14 +26,22 @@ namespace StarForce
             public const int UIFormAsset = 50;
             public const int UISoundAsset = 30;
 
-            public const int MyAircraftAsset = 90;
-            public const int AircraftAsset = 80;
-            public const int ThrusterAsset = 30;
-            public const int WeaponAsset = 30;
-            public const int ArmorAsset = 30;
-            public const int BulletAsset = 80;
-            public const int AsteroiAsset = 80;
+            public const int PlayerAsset = 90;
+            public const int CharacterAsset = 80;
             public const int EffectAsset = 80;
+            public const int BackgroundAsset = 80;
+            public const int AttackAsset = 80;
+            public const int WeaponAsset = 80;
+
+            public const int GroundWeaponAsset = 80;
+            //public const int MyAircraftAsset = 90;
+            //public const int AircraftAsset = 80;
+            //public const int ThrusterAsset = 30;
+            //public const int WeaponAsset = 30;
+            //public const int ArmorAsset = 30;
+            //public const int BulletAsset = 80;
+            //public const int AsteroiAsset = 80;
+
         }
     }
 }

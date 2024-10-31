@@ -30,29 +30,37 @@ namespace StarForce
             protected set;
         }
 
-        private MyAircraft m_MyAircraft = null;
+        private Player m_Player = null;
+
+        public int heroID = 10011;
+
+       // public int weaponID = 101010;
+        public string m_name = "RedHeroKnight_Sword";
 
         public virtual void Initialize()
         {
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, OnShowEntitySuccess);
             GameEntry.Event.Subscribe(ShowEntityFailureEventArgs.EventId, OnShowEntityFailure);
 
-            SceneBackground = Object.FindObjectOfType<ScrollableBackground>();
-            if (SceneBackground == null)
-            {
-                Log.Warning("Can not find scene background.");
-                return;
-            }
+            //SceneBackground = Object.FindObjectOfType<ScrollableBackground>();
+            //if (SceneBackground == null)
+            //{
+            //    Log.Warning("Can not find scene background.");
+            //    return;
+            //}
 
-            SceneBackground.VisibleBoundary.gameObject.GetOrAddComponent<HideByBoundary>();
-            GameEntry.Entity.ShowMyAircraft(new MyAircraftData(GameEntry.Entity.GenerateSerialId(), 10000)
+            // SceneBackground.VisibleBoundary.gameObject.GetOrAddComponent<HideByBoundary>();           
+            var playerData = new PlayerData(GameEntry.Entity.GenerateSerialId(), heroID)
             {
-                Name = "My Aircraft",
+                Name = m_name,
                 Position = Vector3.zero,
-            });
-
+            };
+            playerData.WeaponId = 0;
+            
+            GameEntry.Entity.ShowPlayer(playerData);
+            
             GameOver = false;
-            m_MyAircraft = null;
+            m_Player = null;
         }
 
         public virtual void Shutdown()
@@ -63,9 +71,10 @@ namespace StarForce
 
         public virtual void Update(float elapseSeconds, float realElapseSeconds)
         {
-            if (m_MyAircraft != null && m_MyAircraft.IsDead)
+            if (m_Player != null && m_Player.IsDead)
             {
-                GameOver = true;
+                GameOver = false;
+                // GameOver = true;
                 return;
             }
         }
@@ -73,9 +82,22 @@ namespace StarForce
         protected virtual void OnShowEntitySuccess(object sender, GameEventArgs e)
         {
             ShowEntitySuccessEventArgs ne = (ShowEntitySuccessEventArgs)e;
-            if (ne.EntityLogicType == typeof(MyAircraft))
+            if (ne.EntityLogicType == typeof(Player))
             {
-                m_MyAircraft = (MyAircraft)ne.Entity.Logic;
+                m_Player = (Player)ne.Entity.Logic;
+                
+                // 获取 PlayerController 并设置 PlayerData
+                var playerController = m_Player.GetComponent<PlayerController>();
+                if (playerController != null)
+                {
+                    PlayerData playerData = ne.UserData as PlayerData;
+                    playerController.SetPlayerData(playerData);
+                    Log.Info($"Set PlayerData to PlayerController: {playerData.Name}");
+                }
+                else
+                {
+                    Log.Error("PlayerController not found on player entity");
+                }
             }
         }
 

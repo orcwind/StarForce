@@ -15,23 +15,55 @@ namespace StarForce
         Undefined = 0,
 
         /// <summary>
-        /// 弹出框。
+        /// 开始界面。
         /// </summary>
-        DialogForm = 1,
-
-        /// <summary>
-        /// 主菜单。
-        /// </summary>
-        MenuForm = 100,
+        UIStartMenu = 1,
 
         /// <summary>
         /// 设置。
         /// </summary>
-        SettingForm = 101,
+        UISettingForm =2,
 
         /// <summary>
-        /// 关于。
+        /// 背包界面
         /// </summary>
-        AboutForm = 102,
+        UIInventory = 3,
+
+        /// <summary>
+        /// 装备栏界面
+        /// </summary>
+        UIEquipmentSlot = 4,
+
+        /// <summary>
+        /// 角色参数界面
+        /// </summary>
+        UICharacterDetailStatus = 5,
+
+        /// <summary>
+        /// 死亡界面
+        /// </summary>
+        UIGameOver = 6,
+
+        /// <summary>
+        /// 关于
+        /// </summary>
+        UIAboutForm=7,
+
+        /// <summary>
+        /// 对话界面
+        /// </summary>
+        UIDialogForm=8,
+
+        
+
+        /// <summary>
+        /// 交互提示
+        /// </summary>
+        UIInteractionPrompt = 9,
+
+        /// <summary>
+        /// 武器信息
+        /// </summary>
+        UIItemInfo = 10,
     }
 }

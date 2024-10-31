@@ -5,6 +5,8 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
@@ -195,6 +197,8 @@ namespace StarForce
             private set;
         }
 
+        
+
         private static void InitBuiltinComponents()
         {
             Base = UnityGameFramework.Runtime.GameEntry.GetComponent<BaseComponent>();
@@ -217,6 +221,9 @@ namespace StarForce
             Sound = UnityGameFramework.Runtime.GameEntry.GetComponent<SoundComponent>();
             UI = UnityGameFramework.Runtime.GameEntry.GetComponent<UIComponent>();
             WebRequest = UnityGameFramework.Runtime.GameEntry.GetComponent<WebRequestComponent>();
+
+     
+
         }
     }
 }

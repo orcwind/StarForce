@@ -1,44 +1,26 @@
-﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2021 Jiang Yin. All rights reserved.
-// Homepage: https://gameframework.cn/
-// Feedback: mailto:ellan@gameframework.cn
-//------------------------------------------------------------
-
-using GameFramework;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityGameFramework.Runtime;
+using GameFramework;
 
 namespace StarForce
 {
-    /// <summary>
-    /// 武器类。
-    /// </summary>
-    public class Weapon : Entity
+    public class Weapon : Entity, IReference
     {
-        private const string AttachPoint = "Weapon Point";
-
         [SerializeField]
-        private WeaponData m_WeaponData = null;
+        protected WeaponData m_WeaponData = null;
 
-        private float m_NextAttackTime = 0f;
+        private Transform m_ParentTransform = null;
 
-#if UNITY_2017_3_OR_NEWER
         protected override void OnInit(object userData)
-#else
-        protected internal override void OnInit(object userData)
-#endif
         {
             base.OnInit(userData);
         }
 
-#if UNITY_2017_3_OR_NEWER
-        protected override void OnShow(object userData)
-#else
-        protected internal override void OnShow(object userData)
-#endif
+        public void InitializeWeapon(object userData)
         {
-            base.OnShow(userData);
+            base.OnShow(userData); // 调用基类的protected OnShow方法
 
             m_WeaponData = userData as WeaponData;
             if (m_WeaponData == null)
@@ -47,34 +29,52 @@ namespace StarForce
                 return;
             }
 
-            GameEntry.Entity.AttachEntity(Entity, m_WeaponData.OwnerId, AttachPoint);
+            Name = m_WeaponData.WeaponName;
+            CachedTransform.localPosition = m_WeaponData.Position;
+            CachedTransform.localRotation = m_WeaponData.Rotation;
         }
 
-#if UNITY_2017_3_OR_NEWER
         protected override void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)
-#else
-        protected internal override void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)
-#endif
         {
             base.OnAttachTo(parentEntity, parentTransform, userData);
 
-            Name = Utility.Text.Format("Weapon of {0}", parentEntity.Name);
+            Name = string.Format("Weapon of {0}", parentEntity.Name);
             CachedTransform.localPosition = Vector3.zero;
+            m_ParentTransform = parentTransform;
         }
 
-        public void TryAttack()
+        protected override void OnHide(bool isShutdown, object userData)
         {
-            if (Time.time < m_NextAttackTime)
-            {
-                return;
-            }
+            m_WeaponData = null;
+            base.OnHide(isShutdown, userData);
+        }
 
-            m_NextAttackTime = Time.time + m_WeaponData.AttackInterval;
-            GameEntry.Entity.ShowBullet(new BulletData(GameEntry.Entity.GenerateSerialId(), m_WeaponData.BulletId, m_WeaponData.OwnerId, m_WeaponData.OwnerCamp, m_WeaponData.Attack, m_WeaponData.BulletSpeed)
-            {
-                Position = CachedTransform.position,
-            });
-            GameEntry.Sound.PlaySound(m_WeaponData.BulletSoundId);
+        public int GetTypeId()
+        {
+            return m_WeaponData.TypeId;
+        }
+
+        public WeaponData WeaponData
+        {
+            get { return m_WeaponData; }
+        }
+
+        public static Weapon Create(object userData)
+        {
+            Weapon weapon = ReferencePool.Acquire<Weapon>();
+            weapon.InitializeWeapon(userData);
+            return weapon;
+        }
+
+        public void Clear()
+        {
+            m_WeaponData = null;
+            m_ParentTransform = null;
+        }
+
+        public WeaponData GetWeaponData()
+        {
+            return m_WeaponData;
         }
     }
 }

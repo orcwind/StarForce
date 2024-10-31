@@ -16,5 +16,17 @@ namespace StarForce
         /// 生存模式。
         /// </summary>
         Survival,
+
+        /// <summary>
+        /// 常规模式
+        /// </summary>
+        Normal,
+
+      /// <summary>
+        /// test模式
+        /// </summary>
+        Test
+
+
     }
 }
